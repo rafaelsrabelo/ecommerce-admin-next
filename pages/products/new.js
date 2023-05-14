@@ -1,15 +1,23 @@
 import Layout from "@/components/Layout";
+import axios from "axios";
 import { useState } from "react";
 
 export default function NewProduct () {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    function createProduct() {
+    async function createProduct() {
+        const data = {
+            title,
+            description,
+            price
+        };
+        console.log(data);
+        await axios.post('/api/products', data)
     }
     return (
         <Layout>
-            <form onSubmit={() => console.log(event.target)}>
+            <form onSubmit={createProduct()}>
                 <h1>New Product</h1>
                 <label>Product name</label>
                 <input type="text" value={title} placeholder="product name" onChange={event => setTitle(event.target.value)}/>
