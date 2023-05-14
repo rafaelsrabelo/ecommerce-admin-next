@@ -11,7 +11,7 @@ export default function Home() {
         </h2>
         <div className="flex items-center justify-center bg-gray-300 gap-1 text-black rounded-lg overflow-hidden">
           <img src={session?.user?.image} className="w-10 h-10 rounded " alt="" />
-          <div className="py-0">
+          <div className="">
           <p className="px-2">
             {session?.user?.name}
           </p>

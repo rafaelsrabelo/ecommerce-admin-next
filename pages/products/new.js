@@ -19,7 +19,6 @@ export default function NewProduct () {
         };
         await axios.post('/api/products', data);
         setGoToProducts(true);
-        alert('deu certo, chapa!');
     }
     useEffect(() => {
         if (goToProducts) {
