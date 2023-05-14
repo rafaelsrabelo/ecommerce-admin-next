@@ -11,7 +11,8 @@ export default async function handle(req, res) {
       const productDoc = await Product.create({
         title, 
         description, 
-        price
+        price,
+        created_at: new Date()
       })
         res.json(productDoc);
     }

@@ -11,7 +11,8 @@ export default function NewProduct () {
         const data = {
             title,
             description,
-            price
+            price,
+            created_at
         };
         await axios.post('/api/products', data)
     }

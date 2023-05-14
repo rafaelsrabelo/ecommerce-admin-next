@@ -6,14 +6,17 @@ export default function Home() {
   return (
     <Layout>
       <div className="text-gray-900 flex justify-between">
-        <h2 className="">
+        <h2 className="text-4xl font-medium text-gray-900 dark:text-white">
           Hello, <strong>{session?.user?.name}</strong>
         </h2>
-        <div className="flex bg-gray-300 gap-1 text-black rounded-lg overflow-hidden">
-          <img src={session?.user?.image} className="w-6 h-6 " alt="" />
-          <span className="px-2">
+        <div className="flex items-center justify-center bg-gray-300 gap-1 text-black rounded-lg overflow-hidden">
+          <img src={session?.user?.image} className="w-10 h-10 rounded" alt="" />
+          <div className="">
+          <p className="px-2">
             {session?.user?.name}
-          </span>
+          </p>
+          <small className="px-2">{session?.user?.email}</small>
+          </div>
         </div>
       </div>
     </Layout>
