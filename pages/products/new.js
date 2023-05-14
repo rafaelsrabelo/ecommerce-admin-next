@@ -17,7 +17,7 @@ export default function NewProduct () {
     }
     return (
         <Layout>
-            <form onSubmit={createProduct()}>
+            <form onSubmit={createProduct}>
                 <h1>New Product</h1>
                 <label>Product name</label>
                 <input type="text" value={title} placeholder="product name" onChange={event => setTitle(event.target.value)}/>
