@@ -14,7 +14,7 @@ export default function Home() {
   }
 
 return (
-  <div>
+  <div className="bg-blue-900 min-h-screen">
     <p>logged in {session.user.email}</p>
     <button onClick={() => { signOut()}} className="bg-red-500 text-white p-2 px-4 rounded-lg">Sair</button>
   </div>
