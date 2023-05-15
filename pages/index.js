@@ -6,10 +6,10 @@ export default function Home() {
   return (
     <Layout>
       <div className="text-gray-900 flex justify-between">
-        <h2 className="text-4xl font-medium text-gray-900 dark:text-white">
+        <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
           Hello, <strong>{session?.user?.name}</strong>
         </h2>
-        <div className="flex items-center justify-center bg-gray-300 gap-1 text-black rounded-lg overflow-hidden">
+        <div className="flex items-center justify-center bg-gray-300 gap-1 text-gray-900 rounded-lg overflow-hidden">
           <img src={session?.user?.image} className="w-16 h-16 rounded " alt="" />
           <div className="">
           <p className="px-2">
