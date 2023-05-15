@@ -10,7 +10,7 @@ export default function Home() {
           Hello, <strong>{session?.user?.name}</strong>
         </h2>
         <div className="flex items-center justify-center bg-gray-300 gap-1 text-black rounded-lg overflow-hidden">
-          <img src={session?.user?.image} className="w-10 h-10 rounded " alt="" />
+          <img src={session?.user?.image} className="w-16 h-16 rounded " alt="" />
           <div className="">
           <p className="px-2">
             {session?.user?.name}
