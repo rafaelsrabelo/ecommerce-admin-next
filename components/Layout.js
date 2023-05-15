@@ -1,4 +1,4 @@
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession, signIn } from "next-auth/react"
 import Nav from "@/components/Nav";
 
 export default function Layout({children}) {
@@ -19,7 +19,6 @@ return (
   <div className="bg-blue-700 min-h-screen flex">
     <Nav />
     <div className="bg-white flex-grow p-4">{children}</div>
-    {/* <button onClick={() => { signOut()}} className="bg-red-500 text-white p-2 px-4 rounded-lg">Sair</button> */}
   </div>
 )
 }

@@ -15,7 +15,6 @@ export default function ProductForm ({
     const [amount, setAmount] = useState(existingAmount || '');
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
-    console.log({_id});
     async function saveProduct(event) {
         event.preventDefault();
         const data = {title,description,price, amount};
@@ -35,15 +34,28 @@ export default function ProductForm ({
       }, [goToProducts, router]);
     return (
         <form onSubmit={saveProduct}>
-            <label>Product name</label>
-            <input type="text" value={title} placeholder="product name" onChange={event => setTitle(event.target.value)}/>
-            <label>Description</label>
-            <textarea value={description} placeholder="description" onChange={event => setDescription(event.target.value)}/>
-            <label>Price (in USD)</label>
-            <input type="number" value={price} placeholder="price" onChange={event => setPrice(event.target.value)}/>
-            <label>Amount</label>
-            <input type="number" value={amount} placeholder="amount" onChange={event => setAmount(event.target.value)}/>
-            <button type="submit" className="btn-primary">Save</button>
+            <label>Nome do produto</label>
+            <input 
+                type="text" 
+                value={title} 
+                placeholder="Nome do produto" 
+                onChange={event => setTitle(event.target.value)}
+                className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                />
+            <label>Descrição</label>
+            <textarea value={description} placeholder="Descrição" onChange={event => setDescription(event.target.value)
+            }
+            className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <label>Preço</label>
+            <input type="number" value={price} placeholder="Preço" onChange={event => setPrice(event.target.value)} 
+                className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <label>Quantidade</label>
+            <input type="number" value={amount} placeholder="Quantidade" onChange={event => setAmount(event.target.value)}
+                className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            />
+            <button type="submit" className="btn-primary">Salvar</button>
         </form>
     )
 }

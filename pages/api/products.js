@@ -23,7 +23,6 @@ export default async function handle(req, res) {
         created_at: new Date(),
         amount
       })
-      console.log(productDoc);
         res.json(productDoc);
     }
 
