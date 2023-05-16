@@ -63,10 +63,10 @@ export default function ProductForm({
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <label>Fotos</label>
-            <div className="mb-2">
+            <div className="mb-2 flex flex-wrap gap-2">
                 {!!images?.length && images.map(link => (
                         <div key={link} className="h-24">
-                          <img src={link}  /> 
+                          <img src={link}  className="rounded-lg"/> 
                         </div>
                     ))}
                 <label className="w-24 h-24 border text-center flex items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 cursor-pointer">
