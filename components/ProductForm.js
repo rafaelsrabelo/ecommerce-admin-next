@@ -20,7 +20,7 @@ export default function ProductForm({
 
     async function saveProduct(event) {
         event.preventDefault();
-        const data = { title, description, price, amount };
+        const data = { title, description, price, amount, images };
         if (_id) {
             // update
             await axios.put(`/api/products/`, { ...data, _id });
