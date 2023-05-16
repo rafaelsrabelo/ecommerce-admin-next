@@ -22,7 +22,7 @@ export default function Products() {
             {
                 products.length === 0 ? (
                     <h1 className="flex items-center h-screen justify-center">
-                            <div>
+                            <div className="text-center items-center justify-center">
                                 <Image src={empty} alt="empty" className="object-contain h-48 w-96 mb-5" />
                                 <p className="">Não há produtos cadastrados, adicione um produto!</p>
                             </div>
@@ -30,6 +30,7 @@ export default function Products() {
                 ) : (
                     products.map(product => (
                         <div key={product._id} className="flex items-center border border-gray-300 rounded-md p-4 mt-4">
+                            {/* <img src={product.images[0]} className="object-fill h-24 w-24 rounded"/> */}
                             <h4 className="text-lg font-bold p-0">{product.title}</h4>
                             <div className="flex align-center ms-auto">
                                 <Link href={'/products/edit/' + product._id} className="flex align-center text-white rounded-lg p-2 bg-gray-500">
