@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Spinner from "./Spinner";
+import { ReactSortable } from "react-sortablejs";
 
 export default function ProductForm({
     _id,
@@ -15,6 +17,7 @@ export default function ProductForm({
     const [price, setPrice] = useState(existingPrice || '');
     const [images, setImages] = useState(existingImages || []);
     const [amount, setAmount] = useState(existingAmount || '');
+    const [isLoading, setIsLoading] = useState(false);
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
 
@@ -40,6 +43,7 @@ export default function ProductForm({
     async function uploadImages(event) {
         const files = event.target?.files;
         if(files?.length >  0) {
+            setIsLoading(true);
             const data = new FormData();
             for (const file of files ) {
                 data.append('file', file);
@@ -48,8 +52,12 @@ export default function ProductForm({
             setImages(oldImages => {
                 return [...oldImages, ...res.data.links]
             })
-            // const images = res.data.map((image) => image.url);
+            setIsLoading(false);
         }
+    }
+
+    function updateImagesOrder(images) {
+        setImages(images);
     }
 
     return (
@@ -63,12 +71,19 @@ export default function ProductForm({
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <label>Fotos</label>
-            <div className="mb-2 flex flex-wrap gap-2">
-                {!!images?.length && images.map(link => (
-                        <div key={link} className="h-24">
-                          <img src={link}  className="rounded-lg"/> 
-                        </div>
+            <div className="mb-2 flex flex-wrap gap-1">
+                <ReactSortable className="flex flex-wrap gap-1" list={images} setList={updateImagesOrder}>
+                    {!!images?.length && images.map(link => (
+                            <div key={link} className="h-24">
+                              <img src={link}  className="rounded-lg"/> 
+                            </div>
                     ))}
+                </ReactSortable>
+            {isLoading && (
+                <div className="h-24 p-1 flex items-center">
+                    <Spinner />
+                </div>
+            )}
                 <label className="w-24 h-24 border text-center flex items-center justify-center text-sm gap-1 text-gray-500 rounded-lg bg-gray-200 cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M7.5 7.5h-.75A2.25 2.25 0 004.5 9.75v7.5a2.25 2.25 0 002.25 2.25h7.5a2.25 2.25 0 002.25-2.25v-7.5a2.25 2.25 0 00-2.25-2.25h-.75m0-3l-3-3m0 0l-3 3m3-3v11.25m6-2.25h.75a2.25 2.25 0 012.25 2.25v7.5a2.25 2.25 0 01-2.25 2.25h-7.5a2.25 2.25 0 01-2.25-2.25v-.75" />
@@ -78,9 +93,6 @@ export default function ProductForm({
                     </div>
                     <input onChange={uploadImages} type="file" className="hidden" />
                 </label>
-                {!images?.lenght && (
-                    <div>Não há fotos deste produto</div>
-                )}
             </div>
             <label>Descrição</label>
             <textarea value={description} placeholder="Descrição" onChange={event => setDescription(event.target.value)
