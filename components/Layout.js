@@ -1,7 +1,5 @@
 import { useSession, signIn } from "next-auth/react"
 import Nav from "@/components/Nav";
-import loginBackgruond from "./../public/login.svg";
-import Image from "next/image";
 
 export default function Layout({ children }) {
   const { data: session } = useSession();
