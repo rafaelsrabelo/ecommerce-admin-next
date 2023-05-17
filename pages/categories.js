@@ -1,6 +1,5 @@
 import Layout from "@/components/Layout";
 import axios from "axios";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { withSwal } from 'react-sweetalert2';
 
