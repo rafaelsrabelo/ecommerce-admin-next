@@ -9,7 +9,7 @@ export default function Home() {
         <div>
 
         <h2 className="text-4xl font-medium text-gray-700 dark:text-white">
-          Hello, <strong>{session?.user?.name}</strong>
+          Olá, <strong>{session?.user?.name}</strong>
         </h2>
         <p className="lead">
         Este é o painel de controle da sua loja.
