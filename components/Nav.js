@@ -7,6 +7,10 @@ export default function Nav () {
     const activeLink = inactiveLink+' bg-white text-blue-900 font-bold';
     const router = useRouter();
     const {pathname} = router;
+    async function logout() {
+        await router.push('/');
+        await signOut();
+    }
     return (
         <aside className="text-white p-4 pr-0 ps-0 justify-center ">
             <Link href={'/'} className="flex gap-1 mb-8 mr-4 px-4">
@@ -47,7 +51,7 @@ export default function Nav () {
                 </svg>
                 Configurações
                 </Link>
-                <button onClick={() => { signOut()}} className="flex mt-20 px-4">
+                <button onClick={logout} className="flex mt-20 px-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 me-1">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
                 </svg>
