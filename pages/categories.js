@@ -94,7 +94,7 @@ function Categories({swal}) {
                 categories.length > 0 && categories.map(category => (
                     <div className="flex justify-between ps-2 pe-4 mb-2" key={category._id}>
                         <h4>{category.name}</h4>
-                        <small>{category?.parent?.name}</small>
+                        <h4>{category?.parent?.name}</h4>
                         <div className="flex align-center">
                                 <button
                                     onClick={() => editCategory(category)} 
