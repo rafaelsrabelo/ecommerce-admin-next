@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
+import { useForm } from "react-hook-form";
 
 export default function ProductForm({
     _id,
@@ -13,12 +14,8 @@ export default function ProductForm({
     images: existingImages,
     category: existingCategory
 }) {
-    const [title, setTitle] = useState(existingTitle || '');
-    const [description, setDescription] = useState(existingDescription || '');
-    const [category, setCategory] = useState(existingCategory || '');
-    const [price, setPrice] = useState(existingPrice || '');
+    const { register, handleSubmit, setValue } = useForm();
     const [images, setImages] = useState(existingImages || []);
-    const [amount, setAmount] = useState(existingAmount || '');
     const [isLoading, setIsLoading] = useState(false);
     const [categories, setCategories] = useState([]);
     const [goToProducts, setGoToProducts] = useState(false);
@@ -28,18 +25,6 @@ export default function ProductForm({
             setCategories(response.data);
         })
     }, [])
-    async function saveProduct(event) {
-        event.preventDefault();
-        const data = { title, description, price, amount, images, category };
-        if (_id) {
-            // update
-            await axios.put(`/api/products/`, { ...data, _id });
-        } else {
-            // create
-            await axios.post('/api/products', data);
-        }
-        setGoToProducts(true);
-    }
 
     useEffect(() => {
         if (goToProducts) {
@@ -56,11 +41,23 @@ export default function ProductForm({
                 data.append('file', file);
             }
             const res = await axios.post('/api/upload', data);
-            setImages(oldImages => {
+            setValue(oldImages => {
                 return [...oldImages, ...res.data.links]
             })
+            setValue('images', [...images, ...res.data.links]);
             setIsLoading(false);
         }
+    }
+
+    async function handleRegister(data) {
+        if (_id) {
+            // update
+            await axios.put(`/api/products/`, { ...data, _id });
+        } else {
+            // create
+            await axios.post('/api/products', data);
+        }
+        setGoToProducts(true);
     }
 
     function updateImagesOrder(images) {
@@ -68,20 +65,23 @@ export default function ProductForm({
     }
 
     return (
-        <form onSubmit={saveProduct}>
+        <form onSubmit={handleSubmit(handleRegister)}>
             <label>Nome do produto</label>
             <input
+                {...register('title')}
                 type="text"
-                value={title}
+                // value={title}
                 placeholder="Nome do produto"
-                onChange={event => setTitle(event.target.value)}
+                // onChange={event => setTitle(event.target.value)}
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <label>Categoria</label>
             <select 
+                {...register('categoory')}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                value={category}
-                onChange={ev => setCategory(ev.target.value)}>
+                // value={category}
+                // onChange={ev => setCategory(ev.target.value)}
+                >
                 <option value="">Sem categoria</option>
                 {categories.length > 0 && categories.map(category => (
                     <option key={category._id} value={category._id}>{category.name}</option>
@@ -89,7 +89,7 @@ export default function ProductForm({
             </select>
             <label>Fotos</label>
             <div className="mb-2 flex flex-wrap gap-1">
-                <ReactSortable className="flex flex-wrap gap-1" list={images} setList={updateImagesOrder}>
+                <ReactSortable className="flex flex-wrap gap-1"  list={images} setList={updateImagesOrder}>
                     {!!images?.length && images.map(link => (
                         <div key={link} className="h-24">
                             <img src={link} className="rounded-lg" />
@@ -112,16 +112,29 @@ export default function ProductForm({
                 </label>
             </div>
             <label>Descrição</label>
-            <textarea value={description} placeholder="Descrição" onChange={event => setDescription(event.target.value)
-            }
-                className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            <textarea
+            {...register('description')}
+            // value={description} 
+            placeholder="Descrição" 
+            // onChange={event => setDescription(event.target.value)}
+            className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <label>Preço</label>
-            <input type="number" value={price} placeholder="Preço" onChange={event => setPrice(event.target.value)}
+            <input
+                {...register('price')}
+                type="number" 
+                // value={price} 
+                placeholder="Preço" 
+                // onChange={event => setPrice(event.target.value)}
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <label>Quantidade</label>
-            <input type="number" value={amount} placeholder="Quantidade" onChange={event => setAmount(event.target.value)}
+            <input 
+                {...register('amount')}
+                type="number" 
+                // value={amount} 
+                placeholder="Quantidade" 
+                // onChange={event => setAmount(event.target.value)}
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <button type="submit" className="btn-primary">Salvar</button>
