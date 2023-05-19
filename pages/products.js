@@ -42,9 +42,11 @@ export default function Products() {
             {products.length > 0 && !isLoading && (
                 products.map(product => (
                     <div key={product._id} className="flex items-center border border-gray-300 rounded-md p-4 mt-4">
-                        <img src={product.images[0]} className="object-fill h-24 w-24 rounded"/>
-                        <h4 className="text-lg font-bold p-0">{product.title}</h4>
-                        <p className="text-sm p-0">{product.category}</p>
+                        <img src={product.images[0]} className="object-fill h-24 w-24 rounded-lg me-10"/>
+                        <div>
+                            <h4 className="text-lg font-bold p-0">{product.title}</h4>
+                            <p className="text-sm p-0">{product.category}</p>
+                        </div>
                         <div className="flex align-center ms-auto">
                             <Link href={'/products/edit/' + product._id} className="flex align-center text-white rounded-lg p-2 bg-gray-500">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="#fff" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-6 h-6 me-2">

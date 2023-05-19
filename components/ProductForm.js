@@ -3,6 +3,8 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import Spinner from "./Spinner";
 import { ReactSortable } from "react-sortablejs";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProductForm({
     _id,
@@ -23,6 +25,10 @@ export default function ProductForm({
     const [categories, setCategories] = useState([]);
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
+
+    const notifyUpdate = () => toast("Produto atualizado!");
+    const notifyPost = () => toast("Produto criado!");
+
     useEffect(() => {
         axios.get('/api/categories').then(response => {
             setCategories(response.data);
@@ -31,19 +37,27 @@ export default function ProductForm({
     async function saveProduct(event) {
         event.preventDefault();
         const data = { title, description, price, amount, images, category };
-        if (_id) {
-            // update
-            await axios.put(`/api/products/`, { ...data, _id });
-        } else {
-            // create
-            await axios.post('/api/products', data);
+        try {
+            if (_id) {
+                // update
+                await axios.put(`/api/products/`, { ...data, _id });
+                notifyUpdate();
+            } else {
+                // create
+                await axios.post('/api/products', data);
+                notifyPost();
+            }
+            setGoToProducts(true);
+        } catch (error) {
+            console.log(error);
         }
-        setGoToProducts(true);
     }
 
     useEffect(() => {
         if (goToProducts) {
-            router.push('/products');
+            setTimeout(() => {
+                router.push('/products');
+            }, 1000); // Atraso de 1 segundo (ajuste conforme necessário)
         }
     }, [goToProducts, router]);
 
@@ -78,7 +92,7 @@ export default function ProductForm({
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <label>Categoria</label>
-            <select 
+            <select
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 value={category}
                 onChange={ev => setCategory(ev.target.value)}>
@@ -125,6 +139,18 @@ export default function ProductForm({
                 className="shadow appearance-none border border-gray-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
             <button type="submit" className="btn-primary">Salvar</button>
+            <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
         </form>
     )
 }
