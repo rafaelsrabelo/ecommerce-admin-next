@@ -1,4 +1,5 @@
 import Layout from "@/components/Layout";
+import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { withSwal } from 'react-sweetalert2';
@@ -9,14 +10,16 @@ function Categories({swal}) {
     const [name, setName] = useState('');
     const [categories, setCategories] = useState([]);
     const [parentCategory, setParentCategory] = useState('');
-
+    const [loading, setLoading] = useState(false);
     useEffect(() => {
         fetchCategories();
     }, [])
 
     function fetchCategories() {
+        setLoading(true);
         axios.get('/api/categories').then(result => {
             setCategories(result.data);
+            setLoading(false);
         })
     }
     async function saveCategory(ev) {
@@ -95,7 +98,7 @@ function Categories({swal}) {
             </div>
             <hr className="mb-4" />
             {
-                categories.length > 0 && categories.map(category => (
+                categories.length > 0 && !loading && categories.map(category => (
                     <div className="flex justify-between ps-2 pe-4 mb-2" key={category._id}>
                         <h4>{category.name}</h4>
                         <h4>{category?.parent?.name}</h4>
@@ -121,6 +124,11 @@ function Categories({swal}) {
                     </div>
                 ))
             }
+                        {loading && (
+                <div className="h-24 p-1 flex items-center justify-center">
+                    <Spinner />
+                </div>
+            )} 
         </Layout>
     )
 }
