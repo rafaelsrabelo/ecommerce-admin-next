@@ -45,7 +45,7 @@ export default function Products() {
                         <img src={product.images[0]} className="object-fill h-24 w-24 rounded-lg me-10"/>
                         <div>
                             <h4 className="text-lg font-bold p-0">{product.title}</h4>
-                            <p className="text-sm p-0">{product.category}</p>
+                            {/* <p className="text-sm p-0">{product.category}</p> */}
                         </div>
                         <div className="flex align-center ms-auto">
                             <Link href={'/products/edit/' + product._id} className="flex align-center text-white rounded-lg p-2 bg-gray-500">
