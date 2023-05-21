@@ -2,6 +2,7 @@ import Layout from "@/components/Layout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { withSwal } from 'react-sweetalert2';
+import { toast } from 'react-toastify';
 
 function Categories({swal}) {
     const [editedCategory, setEditedCategory] = useState(null);
@@ -27,8 +28,10 @@ function Categories({swal}) {
             data._id = editedCategory._id;
             await axios.put('/api/categories', data);
             setEditedCategory(null);
+            toast.success('Categoria editada!');
         } else {
             await axios.post('/api/categories', data);
+            toast.success('Categoria criada!');
         }
         setName('');
         fetchCategories();
@@ -52,8 +55,9 @@ function Categories({swal}) {
         }).then(async result => {
             if(result.isConfirmed) {
                 const {_id} = category;
-               await axios.delete('/api/categories?_id='+ _id);
-               fetchCategories();
+                await axios.delete('/api/categories?_id='+ _id);
+                fetchCategories();
+                toast.success('Categoria deletada!');
             }
         }).catch(error => {
             console.log(error)
