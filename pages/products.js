@@ -42,7 +42,7 @@ export default function Products() {
             {products.length > 0 && !isLoading && (
                 products.map(product => (
                     <div key={product._id} className="flex items-center border border-gray-300 rounded-md p-4 mt-4">
-                        <img src={product.images[0]} className="object-fill h-24 w-24 rounded-lg me-10"/>
+                        <img src={product.images[0]} className="object-fill h-24 w-24 rounded-lg me-10 hidden sm:block"/>
                         <div>
                             <h4 className="text-lg font-bold p-0">{product.title}</h4>
                             {/* <p className="text-sm p-0">{product.category}</p> */}
